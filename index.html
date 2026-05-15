@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Phoenixers | Login</title>
+
+<style>
+:root{
+  --orange:#ff6a00;
+  --black:#000000;
+  --white:#ffffff;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  height:100vh;
+  background:var(--black);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+  color:white;
+}
+
+/* 🔥 Fire Particles */
+.fire{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:var(--orange);
+  border-radius:50%;
+  bottom:-10px;
+  animation:rise linear infinite;
+  opacity:0.8;
+}
+
+@keyframes rise{
+  to{
+    transform:translateY(-110vh) scale(0.5);
+    opacity:0;
+  }
+}
+
+.phoenix{
+    position:absolute;
+    width:750px;
+    opacity:0.15;
+    z-index:1;
+    animation:fly 12s infinite alternate ease-in-out;
+}
+@keyframes fly{
+    0%{transform:translateX(-150px) translateY(-40px);}
+    100%{transform:translateX(150px) translateY(60px);}
+}
+
+
+/* CARD */
+.card{
+  background:rgb(25, 25, 25);
+  padding:40px;
+  width:350px;
+  border-radius:14px;
+  border:1px solid rgba(255,106,0,0.4);
+  box-shadow:0 0 30px rgba(255,106,0,0.2);
+  text-align:center;
+  z-index:2;
+}
+
+.card h2{
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  background:#000000;
+  border:1px solid #000000;
+  border-radius:8px;
+  color:white;
+}
+
+input:focus{
+  border-color:var(--orange);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  background:var(--orange);
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  box-shadow:0 0 15px var(--orange);
+}
+
+.toggle{
+  margin-top:15px;
+  font-size:14px;
+  color:#ccc;
+  cursor:pointer;
+}
+
+.toggle span{
+  color:var(--orange);
+}
+
+/* Splash */
+.splash{
+  position:absolute;
+  inset:0;
+  background:var(--black);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  opacity:0;
+  visibility:hidden;
+  transition:0.5s;
+}
+
+.splash.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.logo{
+  font-size:38px;
+  color:var(--orange);
+  margin-bottom:20px;
+}
+
+.loader{
+  width:40px;
+  height:40px;
+  border:4px solid rgba(255,106,0,0.2);
+  border-top:4px solid var(--orange);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Phoenix Bird -->
+<img src="phoenix.jpg" class="phoenix">
+
+<!-- Login Card -->
+<div class="card" id="loginCard">
+  <h2>Login</h2>
+  <input type="email" id="loginEmail" placeholder="Email">
+  <input type="password" id="loginPassword" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div class="toggle">Don't have account? <span onclick="showSignup()">Sign Up</span></div>
+</div>
+
+<!-- Signup Card -->
+<div class="card" id="signupCard" style="display:none;">
+  <h2>Create Account</h2>
+  <input type="text" id="signupUsername" placeholder="Username">
+  <input type="email" id="signupEmail" placeholder="Email">
+  <input type="password" id="signupPassword" placeholder="Password">
+  <button onclick="createAccount()">Account Create</button>
+  <div class="toggle">Already have account? <span onclick="showLogin()">Login</span></div>
+</div>
+
+
+<div class="splash" id="splashScreen">
+  <div class="logo" id="splashText">Welcome to Quantum Phoenixer</div>
+  <div class="loader"></div>
+</div>
+
+<script>
+/*Generate Fire Particles */
+for(let i=0;i<60;i++){
+  let fire=document.createElement("div");
+  fire.classList.add("fire");
+  fire.style.left=Math.random()*100+"%";
+  fire.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(fire);
+}
+
+function showSignup(){
+  document.getElementById("loginCard").style.display="none";
+  document.getElementById("signupCard").style.display="block";
+}
+
+function showLogin(){
+  document.getElementById("signupCard").style.display="none";
+  document.getElementById("loginCard").style.display="block";
+}
+
+function login(){
+  const email=document.getElementById("loginEmail").value;
+  const pass=document.getElementById("loginPassword").value;
+
+  if(email===""||pass===""){
+    alert("Enter credentials");
+    return;
+  }
+
+  localStorage.setItem("auth","true");
+  launchSplash("Welcome To Quantum Phoenixer");
+}
+
+function createAccount(){
+  const user=document.getElementById("signupUsername").value;
+  const email=document.getElementById("signupEmail").value;
+  const pass=document.getElementById("signupPassword").value;
+
+  if(user===""||email===""||pass===""){
+    alert("Fill all fields");
+    return;
+  }
+
+  localStorage.setItem("auth","true");
+  launchSplash("Welcome to Quantum Phoenixer");
+}
+
+function launchSplash(message){
+  document.getElementById("loginCard").style.display="none";
+  document.getElementById("signupCard").style.display="none";
+
+  const splash=document.getElementById("splashScreen");
+  document.getElementById("splashText").innerText=message;
+  splash.classList.add("active");
+
+  setTimeout(()=>{
+    window.location.href="home.html";
+  },2000);
+}
+</script>
+
+</body>
+</html>

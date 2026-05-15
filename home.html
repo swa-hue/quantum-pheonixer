@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Phoenixer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--orange:#ff6a00;
+--dark:#0b0b0b;
+--card:#030303;
+--light:#ffffff;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:var(--dark);
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* FIRE PARTICLES BACKGROUND */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 8%;
+position:fixed;
+width:100%;
+background:#0b0b0bee;
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+nav h2{
+color:var(--orange);
+font-weight:700;
+}
+
+nav ul{
+display:flex;
+gap:35px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+transition:0.3s;
+}
+
+nav a:hover{
+color:var(--orange);
+}
+
+/* SECTION BASE */
+section{
+padding:120px 8% 80px;
+min-height:100vh;
+}
+
+/* HERO */
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:40px;
+}
+
+.hero-text{
+max-width:600px;
+}
+
+.hero-text small{
+letter-spacing:2px;
+opacity:0.7;
+}
+
+.hero-text h1{
+font-size:56px;
+font-weight:800;
+line-height:1.2;
+margin:15px 0;
+}
+
+.hero-text span{
+color:var(--orange);
+}
+
+.hero-text p{
+opacity:0.8;
+margin-bottom:25px;
+}
+
+.btn{
+padding:14px 30px;
+border-radius:30px;
+border:none;
+cursor:pointer;
+font-weight:600;
+margin-right:15px;
+}
+
+.primary{
+background:linear-gradient(90deg,#ff6a00,#ffb347);
+color:white;
+box-shadow:0 0 20px rgba(255,106,0,0.6);
+}
+
+.secondary{
+background:transparent;
+border:1px solid var(--orange);
+color:var(--orange);
+}
+
+.hero-img img{
+width:380px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(255,106,0,0.7);
+}
+
+/* TITLES */
+.title{
+text-align:center;
+font-size:42px;
+margin-bottom:60px;
+font-weight:800;
+}
+
+.title span{
+color:var(--orange);
+}
+
+/* SERVICES */
+.services-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.service-card{
+background:var(--card);
+padding:40px;
+border-radius:20px;
+transition:0.4s;
+}
+
+.service-card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 25px rgba(255,106,0,0.5);
+}
+
+.service-card h3{
+margin-bottom:15px;
+}
+
+/* ABOUT */
+.about-text{
+max-width:800px;
+opacity:0;
+transform:translateX(-80px);
+transition:1s ease;
+line-height: 30px;
+}
+
+.about-text.show{
+opacity:1;
+transform:translateX(0);
+}
+
+.stats{
+display:flex;
+gap:40px;
+margin:40px 0;
+}
+
+.stat{
+background:var(--card);
+padding:30px 40px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 25px rgba(255,106,0,0.5);
+}
+
+.stat h2{
+color:var(--orange);
+font-size:35px;
+}
+
+.highlight{
+background:var(--card);
+padding:20px;
+border-left:4px solid var(--orange);
+border-radius:12px;
+margin-bottom:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="fire"></canvas>
+
+<nav>
+<h2></h2>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#tech stack">Tech Stack</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<div class="hero-text">
+<small>BORN FROM FIRE, FORGED IN CODE</small>
+<h1>Rebuilding the <span>Future</span><br>with Intelligent Technology</h1>
+<p>Enterprise-grade AI, IoT, Web and immersive technologies engineered for global innovation and performance.</p>
+<button class="btn primary">Get Started</button>
+<button class="btn secondary">View Projects</button>
+</div>
+
+<div class="hero-img">
+<img src="phoenix.jpg" alt="">
+</div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+<h2 class="title">About Quantum Phoenixer</h2>
+
+<div class="about-text" id="aboutText">
+<p>Quantum Phoenixer is a next-generation technology venture focused on transforming ideas into scalable digital solutions. We combine innovation, precision engineering, and creative design.</p>
+
+<div class="stats">
+<div class="stat"><h2 class="count" data-target="5">0</h2><p>Domains</p></div>
+<div class="stat"><h2 class="count" data-target="50">0</h2><p>Projects</p></div>
+<div class="stat"><h2 class="count" data-target="30">0</h2><p>Clients</p></div>
+</div>
+
+<div class="highlight"><strong>Innovation Driven</strong><p>Pushing boundaries with cutting-edge technology.</p></div>
+<div class="highlight"><strong>Secure Architecture</strong><p>Built with security-first engineering principles.</p></div>
+<div class="highlight"><strong>Performance Optimized</strong><p>Lightning-fast solutions that scale effortlessly.</p></div>
+
+</div>
+</section>
+<!-- SERVICES -->
+<section id="services">
+<h2 class="title">Our <span>Services</span></h2>
+
+<div class="services-grid">
+<div class="service-card"><h3>Artificial Intelligence</h3><p>Advanced ML systems and enterprise automation frameworks.</p></div>
+<div class="service-card"><h3>IoT Solutions</h3><p>Smart device ecosystems with real-time intelligence.</p></div>
+<div class="service-card"><h3>Web Development</h3><p>Scalable secure full-stack architectures.</p></div>
+<div class="service-card"><h3>App Development</h3><p>High-performance Android & iOS platforms.</p></div>
+<div class="service-card"><h3>Game Development</h3><p>Immersive 2D & 3D interactive environments.</p></div>
+<div class="service-card"><h3>AR / VR</h3><p>Next-generation augmented and virtual experiences.</p></div>
+</div>
+</section>
+
+
+<script>
+
+/* FIRE PARTICLES */
+const canvas=document.getElementById("fire");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+radius:Math.random()*3+1,
+speed:Math.random()*2+1
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="orange";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+ctx.fill();
+p.y-=p.speed;
+if(p.y<0){p.y=canvas.height;}
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+/* ABOUT SLIDE + COUNT */
+window.addEventListener("scroll",()=>{
+const about=document.getElementById("aboutText");
+const pos=about.getBoundingClientRect().top;
+if(pos<window.innerHeight-100){
+about.classList.add("show");
+
+document.querySelectorAll(".count").forEach(counter=>{
+if(counter.innerText==="0"){
+let target=+counter.dataset.target;
+let count=0;
+let interval=setInterval(()=>{
+count++;
+counter.innerText=count+"+";
+if(count>=target)clearInterval(interval);
+},40);
+}
+});
+}
+});
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Phoenixer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= ROOT ================= */
+:root{
+  --orange:#ff6a00;
+  --orange-soft:#ff8c1a;
+  --black:#0b0b0b;
+  --soft-black:#111111;
+  --dark:#000000;
+  --card:#0e0e0f;
+  --white:#ffffff;
+  --gray:#cfcfcf;
+  --light-gray:#9e9e9e;
+  --text-light:#cbd5e1;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background: radial-gradient(circle at top right, #141515, #010000 60%);
+  color:var(--white);
+}
+
+/* ================= PROJECTS SECTION ================= */
+.projects{
+  padding:100px 8%;
+  text-align:center;
+}
+
+.projects h2{
+  font-size:42px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.section-sub{
+  color:var(--text-light);
+  margin-bottom:60px;
+  font-size:16px;
+}
+
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
+}
+
+.project-card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid rgba(255,106,0,0.2);
+  transition:all 0.4s ease;
+  position:relative;
+}
+
+.project-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 30px rgba(255,106,0,0.4);
+  border:1px solid var(--orange);
+}
+
+.project-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:20px;
+  background:linear-gradient(45deg,var(--orange),transparent,var(--orange));
+  opacity:0;
+  transition:0.4s;
+  z-index:-1;
+}
+
+.project-card:hover::before{
+  opacity:1;
+  filter:blur(15px);
+}
+
+.project-img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.project-content{
+  padding:25px;
+  text-align:left;
+}
+
+.project-content h3{
+  font-size:22px;
+  margin-bottom:10px;
+  color:var(--orange);
+}
+
+.project-content p{
+  font-size:14px;
+  color:var(--text-light);
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.btn-link{
+  text-decoration:none;
+  font-weight:600;
+  color:white;
+  background:var(--orange);
+  padding:8px 18px;
+  border-radius:30px;
+  font-size:13px;
+  transition:0.3s;
+  display:inline-block;
+}
+
+.btn-link:hover{
+  background:var(--orange-soft);
+  box-shadow:0 0 15px rgba(255,106,0,0.6);
+}
+
+/* ================= TECH STACK ================= */
+.tech-section{
+  padding:100px 8%;
+  text-align:center;
+
+}
+
+.tech-section h2{
+  font-size:42px;
+  font-weight:800;
+  margin-bottom:20px;
+}
+
+.tech-section p{
+  color:var(--gray);
+  margin-bottom:70px;
+}
+
+.tech-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:40px;
+}
+
+.tech-card{
+  background:var(--soft-black);
+  padding:40px 30px;
+  border-radius:15px;
+  border:1px solid #000000;
+  text-align:left;
+  transition:0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.tech-card:hover{
+  transform:translateY(-8px);
+  border-color:var(--orange);
+  box-shadow:0 20px 40px rgba(255,106,0,0.15);
+}
+
+.tech-card h3{
+  color:var(--orange);
+  margin-bottom:25px;
+  text-transform:uppercase;
+  font-size:18px;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.badge{
+  background:#1a1a1a;
+  padding:8px 16px;
+  border-radius:25px;
+  font-size:14px;
+  border:1px solid #2a2a2a;
+  transition:0.3s ease;
+}
+
+.badge:hover{
+  background:var(--orange);
+  color:var(--black);
+}
+
+/* ================= CTA ================= */
+.cta-section{
+  padding:120px 8%;
+  text-align:center;
+  border-top:1px solid #1e1e1e;
+}
+
+.cta-section h2{
+  font-size:42px;
+  font-weight:800;
+  margin-bottom:20px;
+}
+
+.cta-section p{
+  color:var(--gray);
+  max-width:650px;
+  margin:0 auto 40px;
+  line-height:1.6;
+}
+
+.cta-buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.btn-primary{
+  background:var(--orange);
+  color:var(--black);
+  padding:14px 30px;
+  border-radius:50px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.btn-outline{
+  border:1px solid var(--orange);
+  color:var(--orange);
+  padding:14px 30px;
+  border-radius:50px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.btn-outline:hover{
+  background:var(--orange);
+  color:var(--black);
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  padding:80px 8% 40px;
+  background:var(--black);
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1.5fr 1fr;
+  gap:50px;
+}
+
+.logo-box{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.logo-box img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+  background:#111;
+  border-radius:12px;
+}
+
+.footer h3{
+  margin-bottom:20px;
+  font-size:18px;
+}
+
+.footer p,
+.footer a,
+.contact-item{
+  color:var(--light-gray);
+  font-size:14px;
+  margin-bottom:12px;
+  text-decoration:none;
+}
+
+.footer a:hover{
+  color:var(--orange);
+}
+
+.footer-bottom{
+  border-top:1px solid #1e1e1e;
+  margin-top:60px;
+  padding-top:20px;
+  text-align:center;
+  color:var(--light-gray);
+  font-size:14px;
+}
+
+@media(max-width:992px){
+  .footer-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:768px){
+  .projects h2,
+  .tech-section h2,
+  .cta-section h2{
+    font-size:30px;
+  }
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<h2></h2>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#tech stack">Tech Stack</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- ================= PROJECTS ================= -->
+<section class="projects">
+  <h2>Our Projects</h2>
+  <p class="section-sub">A showcase of innovative digital products engineered by Quantum Phoenixer.</p>
+
+  <div class="project-grid">
+
+    <div class="project-card">
+      <img src="mech speedo landing image.jpeg" class="project-img">
+      <div class="project-content">
+        <h3>MechSpeedo</h3>
+        <p>Roadside Assistance Platform enabling real-time mechanic discovery and geo-based service optimization.</p>
+        <a href="#" class="btn-link">View Details</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="story verse .jpeg" class="project-img">
+      <div class="project-content">
+        <h3>StoryVerse</h3>
+        <p>AI-driven children’s storytelling platform generating adaptive narratives using NLP models.</p>
+        <a href="#" class="btn-link">View Details</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="safe route image.jpeg" class="project-img">
+      <div class="project-content">
+        <h3>SafeRoute</h3>
+        <p>Intelligent navigation solution leveraging real-time threat detection and safety prioritization.</p>
+        <a href="#" class="btn-link">View Details</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="vestaa image.jpeg" class="project-img">
+      <div class="project-content">
+        <h3>VESTAA</h3>
+        <p>AI-powered e-commerce ecosystem engineered for scalable transactions and analytics-driven growth.</p>
+        <a href="#" class="btn-link">View Details</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= TECH STACK ================= -->
+<section class="tech-section">
+  <h2>Our Tech Stack</h2>
+  <p>The technologies we use to build powerful digital solutions.</p>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h3>Frontend</h3>
+      <div class="badges">
+        <div class="badge">HTML</div>
+        <div class="badge">CSS</div>
+        <div class="badge">JavaScript</div>
+        <div class="badge">React</div>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <h3>Backend</h3>
+      <div class="badges">
+        <div class="badge">Node.js</div>
+        <div class="badge">Express</div>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <h3>Database</h3>
+      <div class="badges">
+        <div class="badge">MongoDB</div>
+        <div class="badge">MySQL</div>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <h3>Design</h3>
+      <div class="badges">
+        <div class="badge">Figma</div>
+        <div class="badge">Adobe XD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-section">
+  <h2>Let's Build the Future Together</h2>
+  <p>Ready to transform your idea into a powerful digital solution? Get in touch and let's make it happen.</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-primary">Start a Project</a>
+    <a href="#" class="btn-outline">Explore Services</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-grid">
+
+    <div>
+      <div class="logo-box">
+        <img src="quantum engineer-logo.jpeg" alt="Quantum Phoenixer logo">
+        <h3>Quantum Phoenixer</h3>
+      </div>
+      <p>Born from Fire, Forged in Code. Building next-generation digital solutions.</p>
+    </div>
+
+    <div>
+      <h3>Quick Links</h3>
+      <a href="#Home">Home</a>
+      <a href="#About">About</a>
+      <a href="#Services">Services</a>
+      <a href="#Projects">Projects</a>
+      <a href="#Tech stack">Tech stack</a>
+      <a href="#Contact">Contact</a>
+    </div>
+
+    <div>
+      <h3>Contact</h3>
+      <div class="contact-item">hello@quantumphoenixer.com</div>
+      <div class="contact-item">+91 6383488861</div>
+      <div class="contact-item">India</div>
+    </div>
+
+    <div>
+      <h3>Follow Us</h3>
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+    </div>
+
+  </div>
+
+ 
+</footer>
+
+</body>
+</html>
